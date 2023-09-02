@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="iPhoneMinus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numberOfIphone" type="text" class="form-control text-center" value="1">
+                           <button id="iPhonePlus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="iPhonePrice">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="iPhoneSiliconCaseMinus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numberOfIPhoneSiliconCase" type="text" class="form-control text-center" value="1">
+                           <button id="iPhoneSiliconCasePlus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="iPhoneSiliconCasePrice">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subTotal">00</span></h5>
+                        <h5>$ <span id="taxAmount">0</span></h5>
+                        <h5>$ <span id="totalAmount">00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+
+      elementRemove("iPhoneMinus");
+      elementAdd("iPhonePlus");
+      elementRemove("iPhoneSiliconCaseMinus");
+      elementAdd("iPhoneSiliconCasePlus");
+      subTotal();
+      
+
+
+      
+      function elementRemove(id){
+         const iPhoneMinusBtn = document.getElementById(id);
+         iPhoneMinusBtn.addEventListener("click", function(){
+            if(id == "iPhoneMinus"){
+               elementPriceDecrease("numberOfIphone", "iPhonePrice", "subTotal");
+            }
+            else if(id == "iPhoneSiliconCaseMinus"){
+               elementPriceDecrease("numberOfIPhoneSiliconCase", "iPhoneSiliconCasePrice", "subTotal");
+            }
+         });
+      }
+
+      function elementPriceDecrease (numberOfElement, elementPrice, totalPrice){
+         // decreasing the number of iPhone
+         var numberOfElements = document.getElementById(numberOfElement).value;
+            var numberOfElementsInt = parseFloat(numberOfElements);
+            if(numberOfElementsInt > 1){
+               numberOfElementsInt--;
+            }
+            else{
+               numberOfElementsInt = 1;
+            }
+            document.getElementById(numberOfElement).value = numberOfElementsInt;
+
+            // decreasing price of the iPhone
+            if(elementPrice == "iPhonePrice"){
+               var iPhoneNewPrice = 1219 * numberOfElementsInt;
+               document.getElementById(elementPrice).innerText = iPhoneNewPrice;
+               subTotal();
+            }
+            else if(elementPrice == "iPhoneSiliconCasePrice"){
+               var iPhoneNewPrice = 59 * numberOfElementsInt;
+               document.getElementById(elementPrice).innerText = iPhoneNewPrice;
+               subTotal();
+            }
+      }
+      
+      function elementAdd(id){
+         const iPhonePlusBtn = document.getElementById(id);
+         iPhonePlusBtn.addEventListener("click", function(){
+            if(id == "iPhonePlus"){
+               elementPriceIncrease("numberOfIphone", "iPhonePrice", "subTotal");
+            }
+            else if(id == "iPhoneSiliconCasePlus"){
+               elementPriceIncrease("numberOfIPhoneSiliconCase", "iPhoneSiliconCasePrice", "subTotal");
+            }
+         });
+      }
+      function elementPriceIncrease(numberOfElement, elementPrice, totalPrice){
+         //increasing the number of iPhone
+         var numberOfElements = document.getElementById(numberOfElement).value;
+            var numberOfElemenstInt = parseFloat(numberOfElements);
+            numberOfElemenstInt = numberOfElemenstInt+1;
+            document.getElementById(numberOfElement).value = numberOfElemenstInt;
+            
+            // increasing price of the iPhone
+            if(elementPrice == "iPhonePrice"){
+               var iPhoneNewPrice = 1219 * numberOfElemenstInt;
+               document.getElementById(elementPrice).innerText = iPhoneNewPrice;
+               subTotal();
+            }
+            else if(elementPrice == "iPhoneSiliconCasePrice"){
+               var iPhoneSiliconCaseNewPrice = 59 * numberOfElemenstInt;
+               document.getElementById(elementPrice).innerText = iPhoneSiliconCaseNewPrice;
+               subTotal();
+            }
+      }
+      function subTotal(){
+         var totalPhoneAmount = document.getElementById("iPhonePrice").innerText;
+         var totalPhoneAmountInt = parseFloat(totalPhoneAmount);
+         var totalPhoneCaseAmount = document.getElementById("iPhoneSiliconCasePrice").innerText;
+         var totalPhoneCaseAmountInt = parseFloat(totalPhoneCaseAmount);
+         var totalSubAmount = totalPhoneAmountInt + totalPhoneCaseAmountInt;
+         document.getElementById("subTotal").innerText = totalSubAmount;
+
+         var taxAmount = ((totalSubAmount*15)/100);
+         document.getElementById("taxAmount").innerText = taxAmount;
+
+         var finalAmount = totalSubAmount + taxAmount;
+         document.getElementById("totalAmount").innerText = finalAmount;
+      }
+
+      
+
+   </script>
+</body>
+
+</html>
