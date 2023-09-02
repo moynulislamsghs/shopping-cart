@@ -157,6 +157,7 @@
             }
       }
       function subTotal(){
+         // updating subtotal amount
          var totalPhoneAmount = document.getElementById("iPhonePrice").innerText;
          var totalPhoneAmountInt = parseFloat(totalPhoneAmount);
          var totalPhoneCaseAmount = document.getElementById("iPhoneSiliconCasePrice").innerText;
@@ -164,9 +165,11 @@
          var totalSubAmount = totalPhoneAmountInt + totalPhoneCaseAmountInt;
          document.getElementById("subTotal").innerText = totalSubAmount;
 
+         //updating tax amount
          var taxAmount = ((totalSubAmount*15)/100);
          document.getElementById("taxAmount").innerText = taxAmount;
 
+         //updating total amount
          var finalAmount = totalSubAmount + taxAmount;
          document.getElementById("totalAmount").innerText = finalAmount;
       }
